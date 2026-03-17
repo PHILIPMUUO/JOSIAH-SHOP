@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>JOSIAH - Market</title>
+    
+    <!-- Favicon (Base64 SVG Orange Box with J) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23f68b1e'/%3E%3Ctext x='50' y='75' font-size='60' text-anchor='middle' fill='white' font-family='Arial,sans-serif' font-weight='bold'%3EJ%3C/text%3E%3C/svg%3E">
+
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -59,11 +63,6 @@
             from { opacity: 0; transform: scale(0.9); }
             to { opacity: 1; transform: scale(1); }
         }
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(246, 139, 30, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(246, 139, 30, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(246, 139, 30, 0); }
-        }
 
         .anim-fade { animation: fadeIn 0.5s ease forwards; }
         .anim-scale { animation: scaleIn 0.3s ease forwards; }
@@ -89,6 +88,12 @@
             .product-grid { grid-template-columns: repeat(2, 1fr) !important; }
         }
 
+        /* --- Icon Utility --- */
+        .icon { width: 20px; height: 20px; display: inline-block; vertical-align: middle; }
+        .icon svg { width: 100%; height: 100%; fill: currentColor; }
+        .icon-sm { width: 16px; height: 16px; }
+        .icon-lg { width: 24px; height: 24px; }
+
         /* --- Header --- */
         .app-header {
             background: var(--bg-card); padding: 10px 20px;
@@ -104,16 +109,14 @@
         .search-bar { flex: 1; display: flex; border: 1px solid var(--border-color); border-radius: 4px; overflow: hidden; height: 40px; background: var(--bg-grey); transition: all 0.3s; position: relative; }
         .search-bar:focus-within { box-shadow: 0 0 0 2px rgba(246, 139, 30, 0.2); border-color: var(--primary); background: var(--bg-card); }
         .search-input { flex: 1; border: none; padding: 0 35px 0 15px; font-size: 0.95rem; outline: none; background: transparent; color: var(--text-main); }
-        .search-clear { position: absolute; right: 55px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--text-light); cursor: pointer; display: none; }
+        .search-clear { position: absolute; right: 55px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--text-light); cursor: pointer; display: none; font-size: 1.2rem; line-height: 1; }
         .search-input:not(:placeholder-shown) + .search-clear { display: block; }
-        .search-btn { background: var(--primary); border: none; width: 50px; cursor: pointer; color: white; font-size: 1.1rem; transition: background 0.2s; }
+        .search-btn { background: var(--primary); border: none; width: 50px; cursor: pointer; color: white; font-size: 1.1rem; transition: background 0.2s; display: flex; align-items: center; justify-content: center; }
         .search-btn:active { background: var(--primary-dark); }
 
         .header-icons { display: flex; gap: 20px; align-items: center; }
-        .icon-btn { background: none; border: none; cursor: pointer; color: var(--secondary); display: flex; flex-direction: column; align-items: center; font-size: 0.7rem; font-weight: 500; transition: transform 0.2s; padding: 0; }
-        .icon-btn svg { width: 24px; height: 24px; margin-bottom: 2px; fill: var(--secondary); transition: fill 0.2s; }
-        .icon-btn:hover svg { fill: var(--primary); }
-        .icon-btn:hover { transform: translateY(-2px); }
+        .icon-btn { background: none; border: none; cursor: pointer; color: var(--secondary); display: flex; flex-direction: column; align-items: center; font-size: 0.7rem; font-weight: 500; transition: transform 0.2s, color 0.2s; padding: 0; }
+        .icon-btn:hover { transform: translateY(-2px); color: var(--primary); }
         
         .header-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--text-light); }
         .header-link { display: flex; align-items: center; gap: 5px; cursor: pointer; transition: color 0.2s; }
@@ -132,8 +135,6 @@
         .nav-link:hover::before { width: 100%; }
         .nav-link:hover { color: var(--primary); }
         .nav-link.active { background: rgba(246, 139, 30, 0.1); color: var(--primary); border-right: 3px solid var(--primary); }
-        .nav-link svg { width: 20px; height: 20px; fill: currentColor; transition: transform 0.2s; }
-        .nav-link:hover svg { transform: scale(1.1); }
 
         /* --- Components --- */
         .hero-slider { width: 100%; height: 200px; border-radius: 4px; overflow: hidden; margin-bottom: 20px; position: relative; }
@@ -189,11 +190,11 @@
         }
         .whatsapp-btn:hover { background: #128C7E; transform: translateY(-1px); box-shadow: 0 4px 8px rgba(37, 211, 102, 0.2); }
         .whatsapp-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; box-shadow: none; }
-        .whatsapp-btn svg { width: 16px; height: 16px; fill: white; }
         
         .btn-primary {
             background: var(--primary); color: white; border: none; padding: 10px 20px;
             border-radius: 4px; font-weight: 700; cursor: pointer; transition: all 0.2s;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
         }
         .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
 
@@ -232,7 +233,7 @@
         .admin-table th, .admin-table td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); }
         .admin-table th { background: var(--bg-grey); font-weight: 700; color: var(--text-main); }
         .admin-table img { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; }
-        .action-btn { padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 0.8rem; margin-right: 5px; transition: all 0.2s; }
+        .action-btn { padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 0.8rem; margin-right: 5px; transition: all 0.2s; display: inline-flex; align-items: center; gap: 5px; }
         .edit-btn { background: #e3f2fd; color: #1976d2; }
         .edit-btn:hover { background: #bbdefb; }
         .delete-btn { background: #ffebee; color: #c62828; }
@@ -279,8 +280,7 @@
         }
         .nav-item { display: flex; flex-direction: column; align-items: center; color: #888; font-size: 0.65rem; cursor: pointer; transition: color 0.2s; padding: 5px; }
         .nav-item.active { color: var(--primary); }
-        .nav-item svg { width: 24px; height: 24px; margin-bottom: 2px; fill: currentColor; transition: transform 0.2s; }
-        .nav-item:active svg { transform: scale(0.9); }
+        .nav-item:active { transform: scale(0.9); }
 
         /* Toast */
         .toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(100px); background: #333; color: white; padding: 10px 20px; border-radius: 50px; font-size: 0.9rem; z-index: 500; opacity: 0; transition: 0.3s; pointer-events: none; }
@@ -304,7 +304,10 @@
                 <div class="form-group">
                     <input type="password" id="login-pass" class="form-control" placeholder="Password" required>
                 </div>
-                <button type="submit" class="btn-primary" style="width: 100%; margin-top: 10px;">Login</button>
+                <button type="submit" class="btn-primary" style="width: 100%; margin-top: 10px;">
+                    <span class="icon icon-sm"><svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg></span>
+                    Login
+                </button>
                 <p id="login-error" style="color: var(--danger); font-size: 0.8rem; margin-top: 10px; display: none;">Invalid credentials</p>
                 <p onclick="closeLogin()" style="margin-top:15px; cursor:pointer; font-size:0.8rem; color:var(--text-light)">Cancel</p>
             </form>
@@ -318,20 +321,24 @@
             <div class="search-bar">
                 <input type="text" class="search-input" id="search-input" placeholder="Search products...">
                 <button class="search-clear" onclick="clearSearch()">&times;</button>
-                <button class="search-btn" onclick="performSearch()">🔍</button>
+                <button class="search-btn" onclick="performSearch()">
+                    <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
+                </button>
             </div>
             <div class="header-icons">
-                <!-- Theme Toggle -->
                 <div class="theme-toggle" id="theme-toggle" onclick="toggleTheme()"></div>
                 
                 <div class="icon-btn" onclick="openLogin()">
-                    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    <span class="icon-lg"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></span>
                     <span>Admin</span>
                 </div>
             </div>
         </div>
         <div class="header-bottom">
-            <div class="header-link">📍 <span id="store-location">Nairobi</span></div>
+            <div class="header-link">
+                <span class="icon" style="color: var(--primary);"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></span>
+                <span id="store-location">Nairobi</span>
+            </div>
         </div>
     </header>
 
@@ -365,7 +372,10 @@
             
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                 <h2 style="margin:0; color: var(--primary);">Admin Dashboard</h2>
-                <button class="btn-primary" style="background: var(--danger);" onclick="handleLogout()">Logout</button>
+                <button class="btn-primary" style="background: var(--danger);" onclick="handleLogout()">
+                    <span class="icon-sm"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg></span>
+                    Logout
+                </button>
             </div>
 
             <div class="admin-tabs">
@@ -377,7 +387,10 @@
             <!-- Products Tab -->
             <div id="tab-products">
                 <div style="margin-bottom: 15px;">
-                    <button class="btn-primary" onclick="openProductModal()">+ Add Product</button>
+                    <button class="btn-primary" onclick="openProductModal()">
+                        <span class="icon-sm"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></span>
+                        Add Product
+                    </button>
                 </div>
                 <div style="overflow-x: auto;">
                     <table class="admin-table">
@@ -399,7 +412,10 @@
             <!-- Categories Tab -->
             <div id="tab-categories" style="display:none;">
                 <div style="margin-bottom: 15px;">
-                    <button class="btn-primary" onclick="openCategoryModal()">+ Add Category</button>
+                    <button class="btn-primary" onclick="openCategoryModal()">
+                        <span class="icon-sm"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></span>
+                        Add Category
+                    </button>
                 </div>
                 <div id="categories-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px;"></div>
             </div>
@@ -420,7 +436,7 @@
                         <label>Location</label>
                         <input type="text" class="form-control" id="prof-location">
                     </div>
-                    <hr>
+                    <hr style="border-color:var(--border-color);">
                     <h3>Change Password</h3>
                     <div class="form-group">
                         <label>New Password</label>
@@ -436,15 +452,15 @@
     <!-- Mobile Bottom Nav -->
     <nav class="bottom-nav" id="mobile-nav">
         <div class="nav-item active" onclick="navigateTo('home')">
-            <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            <span class="icon-lg"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></span>
             <span>Home</span>
         </div>
         <div class="nav-item" onclick="categorySearch('all')">
-            <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+            <span class="icon-lg"><svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg></span>
             <span>Categories</span>
         </div>
         <div class="nav-item" onclick="openLogin()">
-            <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            <span class="icon-lg"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></span>
             <span>Admin</span>
         </div>
     </nav>
@@ -466,7 +482,7 @@
                     <div class="detail-price">KSh <span id="detail-price"></span></div>
                     <div class="detail-desc" id="detail-desc"></div>
                     <button class="whatsapp-btn" id="detail-order-btn" onclick="orderOnWhatsApp(currentDetailProduct.id)" style="width: 100%; padding: 15px; font-size: 1rem;">
-                        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        <span class="icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></span>
                         Order via WhatsApp
                     </button>
                 </div>
@@ -656,13 +672,13 @@
             const desktopNav = document.getElementById('desktop-nav');
             let navHtml = `
                 <div class="nav-link active" onclick="navigateTo('home')">
-                    <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                    <span class="icon"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></span>
                     <span>Home</span>
                 </div>`;
             state.categories.forEach(cat => {
                 navHtml += `
                 <div class="nav-link" onclick="categorySearch('${cat}')">
-                    <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
+                    <span class="icon"><svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg></span>
                     <span>${cat}</span>
                 </div>`;
             });
@@ -709,7 +725,7 @@
                         </div>
                         ${discount > 0 ? `<span class="discount">-${discount}%</span>` : ''}
                         <button class="whatsapp-btn" onclick="event.stopPropagation(); orderOnWhatsApp(${product.id})" ${isSoldOut ? 'disabled' : ''}>
-                            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                            <span class="icon-sm"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></span>
                             ${isSoldOut ? 'Sold Out' : 'Order'}
                         </button>
                     </div>
@@ -728,8 +744,14 @@
                     <td>${p.category}</td>
                     <td><span style="color: ${p.inStock ? 'var(--success)' : 'var(--danger)'}; font-weight:700;">${p.inStock ? 'In Stock' : 'Sold Out'}</span></td>
                     <td>
-                        <button class="action-btn edit-btn" onclick="editProduct(${p.id})">Edit</button>
-                        <button class="action-btn delete-btn" onclick="deleteProduct(${p.id})">Delete</button>
+                        <button class="action-btn edit-btn" onclick="editProduct(${p.id})">
+                            <span class="icon-sm"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></span>
+                            Edit
+                        </button>
+                        <button class="action-btn delete-btn" onclick="deleteProduct(${p.id})">
+                            <span class="icon-sm"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg></span>
+                            Delete
+                        </button>
                     </td>
                 </tr>
             `).join('');
@@ -739,7 +761,9 @@
             catList.innerHTML = state.categories.map(c => `
                 <div class="anim-fade" style="background: var(--bg-grey); padding: 15px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border-color);">
                     <span style="font-weight: 500;">${c}</span>
-                    <button class="action-btn delete-btn" onclick="deleteCategory('${c}')">Delete</button>
+                    <button class="action-btn delete-btn" onclick="deleteCategory('${c}')">
+                        <span class="icon-sm"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg></span>
+                    </button>
                 </div>
             `).join('');
 
@@ -817,7 +841,7 @@
                 orderBtn.innerHTML = '<span>Sold Out</span>';
             } else {
                 orderBtn.disabled = false;
-                orderBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> Order via WhatsApp`;
+                orderBtn.innerHTML = `<span class="icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></span> Order via WhatsApp`;
             }
 
             const mainImg = document.getElementById('detail-main-img');
