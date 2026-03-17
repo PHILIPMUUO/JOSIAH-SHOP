@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>JOSIAH - Market</title>
     
-    <!-- Favicon (Base64 SVG Orange Box with J) -->
+    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23f68b1e'/%3E%3Ctext x='50' y='75' font-size='60' text-anchor='middle' fill='white' font-family='Arial,sans-serif' font-weight='bold'%3EJ%3C/text%3E%3C/svg%3E">
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
@@ -655,6 +655,28 @@
             showToast("Logged out");
         };
 
+        // --- Icons ---
+        const getCategoryIcon = (name) => {
+            const cat = name.toLowerCase();
+            // SVG Paths for specific categories
+            if (cat.includes('watch')) {
+                // Clock Icon
+                return `<svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>`;
+            } else if (cat.includes('shade') || cat.includes('glass')) {
+                // Eye/Visibility Icon
+                return `<svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>`;
+            } else if (cat.includes('necklace') || cat.includes('jewel') || cat.includes('chain')) {
+                // Diamond Icon
+                return `<svg viewBox="0 0 24 24"><path d="M19 3H5L2 9l10 12L22 9l-3-6zM9.62 8l3.46-4.2L16.54 8H9.62zM11 10v6.68L5.62 10H11zm2 0h5.38L13 16.68V10z"/></svg>`;
+            } else if (cat.includes('shoe') || cat.includes('sneaker')) {
+                // Shoe print
+                 return `<svg viewBox="0 0 24 24"><path d="M21.63 15.66c.11-.25.12-.52.03-.77-.14-.38-.4-.68-.72-.9-.31-.21-.67-.32-1.04-.32H15.5c-.18 0-.35.03-.5.1-.61.28-1.09.76-1.37 1.37-.07.15-.1.32-.1.5v1.5c0 .28.22.5.5.5h6.32c.37 0 .73-.11 1.04-.32.32-.22.58-.52.72-.9.09-.25.08-.52-.03-.77zM9.5 15.5c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5S8 13.17 8 14s.67 1.5 1.5 1.5zm3.5-2c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5-1.5.67-1.5 1.5.67 1.5 1.5 1.5zm-6 0c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5S5 11.17 5 12s.67 1.5 1.5 1.5zM1 15.5c0 .83.67 1.5 1.5 1.5S4 16.33 4 15.5 3.33 14 2.5 14 1 14.67 1 15.5zm5.5 2c-.83 0-1.5.67-1.5 1.5S5.67 20.5 6.5 20.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"/></svg>`;
+            } else {
+                // Default Tag/Label Icon
+                return `<svg viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>`;
+            }
+        };
+
         // --- Rendering ---
         const formatPrice = (price) => price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         
@@ -668,23 +690,22 @@
         };
 
         const renderNavigation = () => {
-            // Desktop Sidebar
             const desktopNav = document.getElementById('desktop-nav');
             let navHtml = `
                 <div class="nav-link active" onclick="navigateTo('home')">
                     <span class="icon"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></span>
                     <span>Home</span>
                 </div>`;
+            
             state.categories.forEach(cat => {
                 navHtml += `
                 <div class="nav-link" onclick="categorySearch('${cat}')">
-                    <span class="icon"><svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg></span>
+                    <span class="icon">${getCategoryIcon(cat)}</span>
                     <span>${cat}</span>
                 </div>`;
             });
             desktopNav.innerHTML = navHtml;
 
-            // Update Location
             document.getElementById('store-location').innerText = state.profile.location;
         };
 
@@ -734,7 +755,6 @@
         };
 
         const renderAdminPage = () => {
-            // Render Products Table
             const tbody = document.getElementById('admin-tbody');
             tbody.innerHTML = state.products.map(p => `
                 <tr class="anim-fade">
@@ -756,23 +776,23 @@
                 </tr>
             `).join('');
 
-            // Render Categories List
             const catList = document.getElementById('categories-list');
             catList.innerHTML = state.categories.map(c => `
                 <div class="anim-fade" style="background: var(--bg-grey); padding: 15px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border-color);">
-                    <span style="font-weight: 500;">${c}</span>
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <span class="icon" style="color: var(--primary);">${getCategoryIcon(c)}</span>
+                        <span style="font-weight: 500;">${c}</span>
+                    </div>
                     <button class="action-btn delete-btn" onclick="deleteCategory('${c}')">
                         <span class="icon-sm"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg></span>
                     </button>
                 </div>
             `).join('');
 
-            // Render Profile
             document.getElementById('prof-store-name').value = state.profile.storeName;
             document.getElementById('prof-whatsapp').value = state.profile.whatsapp;
             document.getElementById('prof-location').value = state.profile.location;
 
-            // Update Category Select in Product Form
             const catSelect = document.getElementById('prod-category');
             catSelect.innerHTML = state.categories.map(c => `<option value="${c}">${c}</option>`).join('');
         };
@@ -781,7 +801,6 @@
         const navigateTo = (page) => {
             document.getElementById('home-page').style.display = page === 'home' ? 'block' : 'none';
             
-            // Admin Protection
             if (page === 'admin') {
                 if (!state.isLoggedIn) {
                     openLogin();
@@ -793,7 +812,6 @@
                 document.getElementById('admin-page').style.display = 'none';
             }
 
-            // Active States
             document.querySelectorAll('.nav-item, .nav-link').forEach(el => el.classList.remove('active'));
             
             if(page === 'home') {
@@ -880,7 +898,7 @@
                 document.getElementById('prod-oldprice').value = product.oldPrice || '';
                 document.getElementById('prod-category').value = product.category;
                 document.getElementById('prod-desc').value = product.desc || '';
-                document.getElementById('prod-instock').checked = product.inStock !== false; // Default true
+                document.getElementById('prod-instock').checked = product.inStock !== false;
                 
                 const previewContainer = document.getElementById('img-preview');
                 if(product.imgs) {
